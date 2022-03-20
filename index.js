@@ -1,3 +1,8 @@
+/*
+	Looking at this code by curiosity ?
+	Any suggestion you would like to add ?
+	Please check out my GitHub
+*/
 process.setMaxListeners(0);
 
 const EventEmitter = require('events');
@@ -183,7 +188,8 @@ class NodeUI extends EventEmitter
 
 				case 'consoleVisible':
 					if (typeof(confElemValue) !== 'boolean') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'boolean'. Got type ${typeof(confElemValue)}.`).stack);
-					
+					if (confElemValue === true) Console.Hide();
+					else Console.Show();
 				break;
 
 				case 'socketPassword':
