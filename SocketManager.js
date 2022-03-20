@@ -31,6 +31,7 @@ function handleSocket(NodeUI, config)
 
                 if (!client.authentified) 
                 {
+
                     if (dataParts[0] === config.socketPassword)
                     {
                         config.socketClient = client;
@@ -40,8 +41,6 @@ function handleSocket(NodeUI, config)
                     }
                     return;
                 }
-
-                console.log(dataParts)
   
                 if (dataParts[0] === "codeEvaluation")
                 {
@@ -52,10 +51,9 @@ function handleSocket(NodeUI, config)
                             message: dataParts[2]
                         });
 
-                    if (dataParts[1] === "success") {
-                        console.log("SUCCESS")
+                    if (dataParts[1] === "success")
                         NodeUI.emit('evalResult', Buffer.from(dataParts[2], 'base64').toString());
-                    }
+                    
                 }
 
                 if (dataParts[0] === "uiClose")
@@ -65,6 +63,10 @@ function handleSocket(NodeUI, config)
                     client.destroy()
                     config.socket.close();
                 }
+
+     
+                var selectedEvent = events.filter(function(event){ return event.tag === dataParts[1] })[0];
+                if (!selectedEvent) return;         
 
                 if (dataParts[0] === "warning")
                 {
@@ -97,9 +99,6 @@ function handleSocket(NodeUI, config)
                         NodeUI.emit("warning", warning);
                 }
 
-
-                var selectedEvent = events.filter(function(event){ return event.tag === dataParts[1] })[0];
-                if (!selectedEvent) return;
 
                 if (dataParts[0] === "click") selectedEvent.emit('click');
 
