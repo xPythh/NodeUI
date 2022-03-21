@@ -41,11 +41,11 @@ class NodeUI extends EventEmitter
 		    socketPassword: Math.random().toString(36).slice(2).toString(), // Restrict access with a password to avoid any intrusion
 			tag: Math.random().toString(36).slice(2).toString(),
 			
+			title: "NodeUI",
 			x: 50,
 			y: 130,
 			width:650,
 			height:400,
-			title: "NodeUI",
 			consoleVisible: true, // Hide console when script is starting
 			visible: true,
 			enabled: true,
@@ -123,6 +123,9 @@ class NodeUI extends EventEmitter
 	get height() {return this.#config.height}
 	set height(height) {this.#applyConfig({height: height})}
 
+	get icon() {return this.#config.icon}
+	set icon(icon) {this.#applyConfig({icon: icon})}
+
 
 
 	button(buttonConfig = {}) {
@@ -188,8 +191,8 @@ class NodeUI extends EventEmitter
 
 				case 'consoleVisible':
 					if (typeof(confElemValue) !== 'boolean') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'boolean'. Got type ${typeof(confElemValue)}.`).stack);
-					if (confElemValue === true) Console.Hide();
-					else Console.Show();
+					if (confElemValue === true) Console.Show();
+					else Console.Hide();
 				break;
 
 				case 'socketPassword':
@@ -297,4 +300,4 @@ class NodeUI extends EventEmitter
 		}
 	}
 }
-exports.UI = NodeUI;
+module.exports = NodeUI;
