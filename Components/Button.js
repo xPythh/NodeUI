@@ -30,9 +30,9 @@ module.exports = class extends EventEmitter
 		};
 
 		this.#buttonConfig = Object.assign({}, this.#buttonConfig, newButtonConfig)
-		this.#config.socketClient.packetQueue.push(`add|button|${this.tag}`)
+		this.#config.packetQueue.push(`add|button|${this.tag}`)
 		this.#applyConfig(this.#buttonConfig);
-		this.#config.socketClient.packetQueue.push(`update|checkConfig|${this.tag}`)
+		this.#config.packetQueue.push(`update|checkConfig|${this.tag}`)
 
 	}
 
@@ -93,44 +93,44 @@ module.exports = class extends EventEmitter
 
 					case 'text':
 						if (typeof(confElemValue) !== 'string') return console.log(new Error(`Setting ${confElemValue} is expected to be of type 'string'. Got type ${typeof(confElemValue)}.`).stack);
-						this.#config.socketClient.packetQueue.push(`update|text|${this.tag}|${confElemValue}`);
+						this.#config.packetQueue.push(`update|text|${this.tag}|${confElemValue}`);
 					break;
 
 					case 'x':
 						if (typeof(confElemValue) !== 'number') return console.log(new Error(`Setting ${xPos} is expected to be of type 'number'. Got type ${typeof(confElemValue)}.`).stack);
-						this.#config.socketClient.packetQueue.push(`update|xPos|${this.tag}|${confElemValue}`);
+						this.#config.packetQueue.push(`update|xPos|${this.tag}|${confElemValue}`);
 					break;
 
 					case 'y':
 						if (typeof(confElemValue) !== 'number') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'number'. Got type ${typeof(confElemValue)}.`).stack);
-						this.#config.socketClient.packetQueue.push(`update|yPos|${this.tag}|${confElemValue}`);
+						this.#config.packetQueue.push(`update|yPos|${this.tag}|${confElemValue}`);
 					break;
 
 					case 'visible':
 						if (typeof(confElemValue) !== 'boolean') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'bool'. Got type ${typeof(confElemValue)}.`).stack);	
-						this.#config.socketClient.packetQueue.push(`update|visible|${this.tag}|${confElemValue}`);	
+						this.#config.packetQueue.push(`update|visible|${this.tag}|${confElemValue}`);	
 					break;
 
 					case 'delete':
 						if (typeof(confElemValue) !== 'boolean') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'bool'. Got type ${typeof(confElemValue)}.`).stack);	
-						this.#config.socketClient.packetQueue.push(`delete|${this.tag}`);
+						this.#config.packetQueue.push(`delete|${this.tag}`);
 						this.#buttonConfig.deleted = true;
 					break;
 
 					case 'foreColor':
 						if (typeof(confElemValue) !== 'string') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'string'. Got type ${typeof(confElemValue)}.`).stack);	
 						if (!/^#[0-9A-F]{6}$/i.test(confElemValue)) return console.log(new Error(`Setting ${confElemKey} is expecting a HEX color such as #FF0000`).stack)
-						this.#config.socketClient.packetQueue.push(`update|foreColor|${this.tag}|${confElemValue}`);
+						this.#config.packetQueue.push(`update|foreColor|${this.tag}|${confElemValue}`);
 					break;
 
 					case 'backColor':
 						if (typeof(confElemValue) !== 'string') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'string'. Got type ${typeof(confElemValue)}.`).stack);	
 						if (!/^#[0-9A-F]{6}$/i.test(confElemValue)) return console.log(new Error(`Setting ${confElemKey} is expecting a HEX color such as #FF0000`).stack)
-						this.#config.socketClient.packetQueue.push(`update|backColor|${this.tag}|${confElemValue}`);
+						this.#config.packetQueue.push(`update|backColor|${this.tag}|${confElemValue}`);
 					break;
 
 					case 'backImage':
-						if (confElemValue === null) {  this.#config.socketClient.packetQueue.push(`update|backImage|${this.tag}|`);  break;  }
+						if (confElemValue === null) {  this.#config.packetQueue.push(`update|backImage|${this.tag}|`);  break;  }
 						if (typeof(confElemValue) !== 'string') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'string'. Got type ${typeof(confElemValue)}.`).stack);	
 						var fullPath = null;
 						var backImage = confElemValue;
@@ -141,26 +141,26 @@ module.exports = class extends EventEmitter
 						if (fs.existsSync(appPath + backImage))  fullPath = appPath + backImage;
 						else if (fs.existsSync(backImage))  fullPath = backImage;
 						if (fullPath === null) return console.log(new Error(`Setting ${confElemKey} is not a valid path.`).stack)
-						this.#config.socketClient.packetQueue.push(`update|backImage|${this.tag}|${fullPath}`);
+						this.#config.packetQueue.push(`update|backImage|${this.tag}|${fullPath}`);
 					break;
 
 					case 'enabled':
 						if (typeof(confElemValue) !== 'boolean') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'boolean'. Got type ${typeof(confElemValue)}.`).stack);
-						this.#config.socketClient.packetQueue.push(`update|enabled|${this.tag}|${confElemValue}`);
+						this.#config.packetQueue.push(`update|enabled|${this.tag}|${confElemValue}`);
 					break;
 
 					case 'width':
 						if (typeof(confElemValue) !== 'number') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'number'. Got type ${typeof(confElemValue)}.`).stack);
-						this.#config.socketClient.packetQueue.push(`update|width|${this.tag}|${confElemValue}`);
+						this.#config.packetQueue.push(`update|width|${this.tag}|${confElemValue}`);
 					break;
 
 					case 'height':
 						if (typeof(confElemValue) !== 'number') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'number'. Got type ${typeof(confElemValue)}.`).stack);
-						this.#config.socketClient.packetQueue.push(`update|height|${this.tag}|${confElemValue}`);
+						this.#config.packetQueue.push(`update|height|${this.tag}|${confElemValue}`);
 					break;
 
 					case 'bringToFront':
-						this.#config.socketClient.packetQueue.push(`update|bringToFront|${this.tag}`);
+						this.#config.packetQueue.push(`update|bringToFront|${this.tag}`);
 					break;
 
 				}

@@ -1,4 +1,5 @@
 var events = [];
+
 module.exports.events = events;
 
 
@@ -7,6 +8,7 @@ async function init(NodeUI, config)
     var Net = require("net");
     config.socket = Net.createServer().listen(config.socketPort);
     config.socketPort = config.socket.address().port;
+    config.packetQueue = [];
 
     handleSocket(NodeUI, config);
 }
@@ -18,7 +20,6 @@ function handleSocket(NodeUI, config)
     {
         client.authentified = false;
         client.closeSignalSend = false;
-        client.packetQueue = [];
         client.previousWarning = "";
 
         client.write(`ui|tag|${config.tag}<EOM>`)
@@ -36,6 +37,7 @@ function handleSocket(NodeUI, config)
                     {
                         config.socketClient = client;
                         this.authentified = true;
+                        setInterval(PacketQueurManager, 4);
                         NodeUI.emit('ready');
                         NodeUI.emit('netEstablish'); // Event that will not get cleared
                     }
@@ -138,14 +140,13 @@ function handleSocket(NodeUI, config)
 
         function PacketQueurManager()
         {
-            if (client.packetQueue.length > 0 && !client.closeSignalSend)
+            if (config.packetQueue.length > 0 && !client.closeSignalSend)
             {
-                var nextPacket = client.packetQueue.join("<EOM>");
-                client.packetQueue = [];
+                var nextPacket = config.packetQueue.join("<EOM>");
+                config.packetQueue = [];
                 client.write(nextPacket);
             }
         }
-        setInterval(PacketQueurManager, 4);
     });
 }
 exports.init = init;
