@@ -2,6 +2,7 @@ var events = [];
 
 module.exports.events = events;
 
+var packetQueueManagerInterval;
 
 async function init(NodeUI, config)
 {
@@ -32,12 +33,11 @@ function handleSocket(NodeUI, config)
 
                 if (!client.authentified) 
                 {
-
                     if (dataParts[0] === config.socketPassword)
                     {
                         config.socketClient = client;
                         this.authentified = true;
-                        setInterval(PacketQueurManager, 4);
+                        packetQueueManagerInterval = setInterval(PacketQueurManager, 4);
                         NodeUI.emit('ready');
                         NodeUI.emit('netEstablish'); // Event that will not get cleared
                     }
@@ -58,13 +58,9 @@ function handleSocket(NodeUI, config)
                     
                 }
 
-                if (dataParts[0] === "uiClose")
-                {
-                    if (!client.closeSignalSend) NodeUI.emit('close'); // Send closing signal to UI
-                    closeSignalSend = true;
-                    client.destroy()
-                    config.socket.close();
-                }
+                if (dataParts[0] === "close")
+                    destroySocket(client, NodeUI, config);
+                
 
      
                 var selectedEvent = events.filter(function(event){ return event.tag === dataParts[1] })[0];
@@ -124,23 +120,12 @@ function handleSocket(NodeUI, config)
         });
 
 
-        client.on('end', function() {  
-            if (!client.closeSignalSend) NodeUI.emit('close'); // Send closing signal to UI
-            client.closeSignalSend = true;
-            client.destroy()
-            config.socket.close();
-        });
-
-        client.on('error', function() {  
-            if (!client.closeSignalSend)  NodeUI.emit('close'); // Send closing signal to UI
-            client.closeSignalSend = true;
-            client.destroy()
-            config.socket.close();
-        });
+        client.on('end', function() { destroySocket(client, NodeUI, config); });
+        client.on('error', function() { destroySocket(client, NodeUI, config); });
 
         function PacketQueurManager()
         {
-            if (config.packetQueue.length > 0 && !client.closeSignalSend)
+            if (config.packetQueue.length > 0)
             {
                 var nextPacket = config.packetQueue.join("<EOM>");
                 config.packetQueue = [];
@@ -150,3 +135,13 @@ function handleSocket(NodeUI, config)
     });
 }
 exports.init = init;
+
+
+function destroySocket(client, NodeUI, config)
+{
+    if (!client.closeSignalSend)  NodeUI.emit('close'); // Send closing signal to UI
+    client.closeSignalSend = true;
+    clearInterval(packetQueueManagerInterval);
+    config.socket.close();
+    return;
+}
