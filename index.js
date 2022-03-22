@@ -10,7 +10,6 @@ const fs = require("fs");
 
 
 const defaultValues = require("./DefaultValues.json")["ui"];
-console.log(defaultValues)
 
 const Console = require("./ConsoleManager.js");
 const SocketManager = require("./SocketManager.js");

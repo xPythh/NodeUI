@@ -129,7 +129,6 @@ function handleSocket(NodeUI, config)
             if (config.packetQueue.length > 0)
             {
                 var nextPacket = config.packetQueue.join("<EOM>");
-                console.log(config.packetQueue)
                 config.packetQueue = [];
                 client.write(nextPacket);
             }
