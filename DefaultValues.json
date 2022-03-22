@@ -1,0 +1,82 @@
+{
+	"ui":{
+		"title": "NodeUI",
+		"x": 0,
+		"y": 0,
+		"width": 650,
+		"height": 400,
+		"consoleVisible": true,
+		"enabled": true,
+		"closed": false,
+		"foreColor": "#000000",
+		"backColor": "#F0F0F0",
+		"backImage": "",
+		"icon": "",
+		"topMost": false,
+		"consoleVisible": true,
+		"visible": true
+	},
+
+	"button":{
+		"text": "Button",
+		"x": 0,
+		"y": 0,
+		"width": 75,
+		"height": 23,
+		"visible": true,
+		"deleted": false,
+		"foreColor": "#000000",
+		"backColor": "#F0F0F0",
+		"backImage": null,
+		"enabled": false
+	},
+
+	"checkbox":{
+		"text": "CheckBox",
+		"checked": false,
+		"x": 0,
+		"y": 0,
+		"width": 80,
+		"height": 17,
+		"visible": true,
+		"deleted": false,
+		"foreColor": "#000000",
+		"backColor": "#F0F0F0",
+		"enabled": false
+	},
+
+	"label":{
+		"text": "Label",
+		"x": 0,
+		"y": 0,
+		"width": 43,
+		"height": 27,
+		"visible": true,
+		"deleted": false,
+		"foreColor": "#000000",
+		"backColor": "#F0F0F0"
+	},
+
+	"picturebox":{
+		"x": 0,
+		"y": 0,
+		"width": 100,
+		"height": 50,
+		"visible": true,
+		"deleted": false,
+		"backColor": "#F0F0F0",
+		"image": null
+	},
+
+	"textbox":{
+		"text": "",
+		"x": 0,
+		"y": 0,
+		"width": 100,
+		"height": 20,
+		"visible": true,
+		"deleted": false,
+		"foreColor": "#000000",
+		"backColor": "#F0F0F0"
+	}
+}

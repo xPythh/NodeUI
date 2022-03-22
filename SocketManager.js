@@ -6,6 +6,8 @@ var packetQueueManagerInterval;
 
 async function init(NodeUI, config)
 {
+    events.push(NodeUI); // Add events directly for UI
+
     var Net = require("net");
     config.socket = Net.createServer().listen(config.socketPort);
     config.socketPort = config.socket.address().port;
@@ -39,7 +41,6 @@ function handleSocket(NodeUI, config)
                         this.authentified = true;
                         packetQueueManagerInterval = setInterval(PacketQueurManager, 4);
                         NodeUI.emit('ready');
-                        NodeUI.emit('netEstablish'); // Event that will not get cleared
                     }
                     return;
                 }
@@ -128,6 +129,7 @@ function handleSocket(NodeUI, config)
             if (config.packetQueue.length > 0)
             {
                 var nextPacket = config.packetQueue.join("<EOM>");
+                console.log(config.packetQueue)
                 config.packetQueue = [];
                 client.write(nextPacket);
             }
