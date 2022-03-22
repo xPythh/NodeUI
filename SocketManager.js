@@ -44,7 +44,8 @@ function handleSocket(NodeUI, config)
                     }
                     return;
                 }
-  
+                
+                console.log(dataParts)
                 if (dataParts[0] === "codeEvaluation")
                 {
                     if (dataParts[1] === "failure")
@@ -56,7 +57,6 @@ function handleSocket(NodeUI, config)
 
                     if (dataParts[1] === "success")
                         NodeUI.emit('evalResult', Buffer.from(dataParts[2], 'base64').toString());
-                    
                 }
 
                 if (dataParts[0] === "close")
@@ -129,6 +129,7 @@ function handleSocket(NodeUI, config)
             if (config.packetQueue.length > 0)
             {
                 var nextPacket = config.packetQueue.join("<EOM>");
+                console.log(config.packetQueue)
                 config.packetQueue = [];
                 client.write(nextPacket);
             }

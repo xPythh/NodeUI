@@ -9,9 +9,9 @@ const EventEmitter = require('events');
 const fs = require("fs");
 
 
+const ApplyConfig = require("./ApplyConfig.js");
 const defaultValues = require("./DefaultValues.json")["ui"];
 
-const Console = require("./ConsoleManager.js");
 const SocketManager = require("./SocketManager.js");
 
 const Button = require("./Components/Button.js");
@@ -59,7 +59,7 @@ class NodeUI extends EventEmitter
 			this.#config.width = width;
 			this.#config.height = height;
 		});		
-
+		
 
 		var {exec} = require('child_process');
 		// exec(`"${__dirname}\\NodeUI.exe" ${this.#config.socketPort} "${this.#config.socketPassword}"`);
@@ -152,100 +152,103 @@ class NodeUI extends EventEmitter
 			return defaultValues[configKey];
 	}
 
-	#applyConfig(configAttrib)
-	{
-		for (var [confElemKey, confElemValue] of Object.entries(configAttrib))
+	#applyConfig(configAttribs) { ApplyConfig(configAttribs, this.#config, defaultValues, this.#config.packetQueue, this); }
+	/*
+		#applyConfig(configAttrib)
 		{
-			var getProprety = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(this), confElemKey);
-			if (getProprety && getProprety.set)
+			for (var [confElemKey, confElemValue] of Object.entries(configAttrib))
 			{
-				if (typeof(defaultValues[confElemKey]) !== typeof(confElemValue))
-					return console.log(new Error(`Setting ${confElemKey} is expected to be of type '${typeof(defaultValues[confElemKey])}'. Got type ${typeof(confElemValue)}.`).stack);
-
-				switch (confElemKey) 
+				var getProprety = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(this), confElemKey);
+				if (getProprety && getProprety.set)
 				{
-					case 'evalString':
-						if (typeof(confElemValue) !== 'string') 
-						var base64EvalString = Buffer.from(confElemValue, 'utf-8').toString('base64');
-						this.#config.packetQueue.push(`ui|evalString|${base64EvalString}`);
-					break;
+					if (typeof(defaultValues[confElemKey]) !== typeof(confElemValue))
+						return console.log(new Error(`Setting ${confElemKey} is expected to be of type '${typeof(defaultValues[confElemKey])}'. Got type ${typeof(confElemValue)}.`).stack);
 
-					case 'consoleVisible':
-						if (confElemValue === true) Console.Show();
-						else Console.Hide();
-					break;
+					switch (confElemKey) 
+					{
+						case 'evalString':
+							if (typeof(confElemValue) !== 'string') 
+							var base64EvalString = Buffer.from(confElemValue, 'utf-8').toString('base64');
+							this.#config.packetQueue.push(`ui|evalString|${base64EvalString}`);
+						break;
 
-					case 'socketPassword': break;
-					case 'socketPort': break;
+						case 'consoleVisible':
+							if (confElemValue === true) Console.Show();
+							else Console.Hide();
+						break;
 
-					case 'visible':
-						this.#config.packetQueue.push(`ui|visible|${confElemValue}`);
-					break;
+						case 'socketPassword': break;
+						case 'socketPort': break;
 
-					case 'title':
-						this.#config.packetQueue.push(`ui|title|${confElemValue}`);
-					break;
+						case 'visible':
+							this.#config.packetQueue.push(`ui|visible|${confElemValue}`);
+						break;
 
-					case 'foreColor':
-						if (!/^#[0-9A-F]{6}|#FF000000$/i.test(confElemValue)) return console.log(new Error(`Setting ${confElemKey} is expecting a HEX color such as #FF0000`).stack)
-						this.#config.packetQueue.push(`ui|foreColor|${confElemValue}`);
-					break;
+						case 'title':
+							this.#config.packetQueue.push(`ui|title|${confElemValue}`);
+						break;
 
-					case 'backColor':
-						if (!/^#[0-9A-F]{6}|#FF000000$$/i.test(confElemValue)) return console.log(new Error(`Setting ${confElemKey} is expecting a HEX color such as #FF0000`).stack)
-						this.#config.packetQueue.push(`ui|backColor|${confElemValue}`);
-					break;
+						case 'foreColor':
+							if (!/^#[0-9A-F]{6}|#FF000000$/i.test(confElemValue)) return console.log(new Error(`Setting ${confElemKey} is expecting a HEX color such as #FF0000`).stack)
+							this.#config.packetQueue.push(`ui|foreColor|${confElemValue}`);
+						break;
 
-					case 'enabled':
-						this.#config.packetQueue.push(`ui|enabled|${confElemValue}`);
-					break;
-				
-					case 'close': this.#config.packetQueue.push(`ui|close`); break;
+						case 'backColor':
+							if (!/^#[0-9A-F]{6}|#FF000000$$/i.test(confElemValue)) return console.log(new Error(`Setting ${confElemKey} is expecting a HEX color such as #FF0000`).stack)
+							this.#config.packetQueue.push(`ui|backColor|${confElemValue}`);
+						break;
 
-					case 'width': this.#config.packetQueue.push(`ui|width|${confElemValue}`); break;
+						case 'enabled':
+							this.#config.packetQueue.push(`ui|enabled|${confElemValue}`);
+						break;
+					
+						case 'close': this.#config.packetQueue.push(`ui|close`); break;
 
-					case 'height': this.#config.packetQueue.push(`ui|height|${confElemValue}`); break;
-				
-					case 'x': this.#config.packetQueue.push(`ui|xPos|${confElemValue}`); break;
+						case 'width': this.#config.packetQueue.push(`ui|width|${confElemValue}`); break;
 
-					case 'y': this.#config.packetQueue.push(`ui|yPos|${confElemValue}`); break;
+						case 'height': this.#config.packetQueue.push(`ui|height|${confElemValue}`); break;
+					
+						case 'x': this.#config.packetQueue.push(`ui|xPos|${confElemValue}`); break;
 
-					case 'backImage':
-						if (confElemValue === "") {  this.#config.packetQueue.push(`ui|backImage|`);  break;  }
-						if (typeof(confElemValue) !== 'string') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'string'. Got type ${typeof(confElemValue)}.`).stack);	
-						var fullPath = null;
-						var backImage = confElemValue;
-						var appPath = process.argv[1].split("\\");
-						appPath.pop();
-						appPath = appPath.join("\\") + "\\";
-						backImage = backImage.replace("./", "");
-						if (fs.existsSync(appPath + backImage))  fullPath = appPath + backImage;
-						else if (fs.existsSync(backImage))  fullPath = backImage;
-						if (fullPath === null) return console.log(new Error(`Setting ${confElemKey} is not a valid path.`).stack)
-						this.#config.packetQueue.push(`ui|backImage|${fullPath}`);
-					break;
+						case 'y': this.#config.packetQueue.push(`ui|yPos|${confElemValue}`); break;
 
-					case 'icon':
-						if (confElemValue === "") { this.#config.packetQueue.push(`ui|icon|`); break; }
-						if (typeof(confElemValue) !== 'string') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'string'. Got type ${typeof(confElemValue)}.`).stack);	
-						var fullPath = null;
-						var icon = confElemValue;
-						var appPath = process.argv[1].split("\\");
-						appPath.pop();
-						appPath = appPath.join("\\") + "\\";
-						icon = icon.replace("./", "");
-						if (fs.existsSync(appPath + icon))  fullPath = appPath + icon;
-						else if (fs.existsSync(icon))  fullPath = icon;
-						if (fullPath === null) return console.log(new Error(`Setting ${confElemKey} is not a valid path.`).stack)
-						this.#config.packetQueue.push(`ui|icon|${fullPath}`);
-					break;
+						case 'backImage':
+							if (confElemValue === "") {  this.#config.packetQueue.push(`ui|backImage|`);  break;  }
+							if (typeof(confElemValue) !== 'string') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'string'. Got type ${typeof(confElemValue)}.`).stack);	
+							var fullPath = null;
+							var backImage = confElemValue;
+							var appPath = process.argv[1].split("\\");
+							appPath.pop();
+							appPath = appPath.join("\\") + "\\";
+							backImage = backImage.replace("./", "");
+							if (fs.existsSync(appPath + backImage))  fullPath = appPath + backImage;
+							else if (fs.existsSync(backImage))  fullPath = backImage;
+							if (fullPath === null) return console.log(new Error(`Setting ${confElemKey} is not a valid path.`).stack)
+							this.#config.packetQueue.push(`ui|backImage|${fullPath}`);
+						break;
 
-					case 'topMost': this.#config.packetQueue.push(`ui|topMost|${confElemValue}`); break;
+						case 'icon':
+							if (confElemValue === "") { this.#config.packetQueue.push(`ui|icon|`); break; }
+							if (typeof(confElemValue) !== 'string') return console.log(new Error(`Setting ${confElemKey} is expected to be of type 'string'. Got type ${typeof(confElemValue)}.`).stack);	
+							var fullPath = null;
+							var icon = confElemValue;
+							var appPath = process.argv[1].split("\\");
+							appPath.pop();
+							appPath = appPath.join("\\") + "\\";
+							icon = icon.replace("./", "");
+							if (fs.existsSync(appPath + icon))  fullPath = appPath + icon;
+							else if (fs.existsSync(icon))  fullPath = icon;
+							if (fullPath === null) return console.log(new Error(`Setting ${confElemKey} is not a valid path.`).stack)
+							this.#config.packetQueue.push(`ui|icon|${fullPath}`);
+						break;
 
-					case 'notify': this.#config.packetQueue.push(`ui|notify|${confElemValue}`); break;
+						case 'topMost': this.#config.packetQueue.push(`ui|topMost|${confElemValue}`); break;
+
+						case 'notify': this.#config.packetQueue.push(`ui|notify|${confElemValue}`); break;
+					}
 				}
 			}
 		}
-	}
+	*/
 }
 module.exports = NodeUI;
