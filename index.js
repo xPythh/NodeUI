@@ -66,7 +66,7 @@ class NodeUI extends EventEmitter
 
 
 		var {exec} = require('child_process');
-		// exec(`"${__dirname}\\NodeUI.exe" ${this.#config.socketPort} "${this.#config.socketPassword}"`);
+		exec(`"${__dirname}\\NodeUI.exe" ${this.#config.socketPort} "${this.#config.socketPassword}"`);
 	};
 
 
