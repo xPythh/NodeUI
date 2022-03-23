@@ -10,11 +10,12 @@
 ***NodeUI*** *is designed to be the simplest way possible to make lightweight WinForms in NodeJS.*
 
 ## Table of contents:bookmark_tabs:
+- [**Updates**](#updated)
 - [**Installation**](#installation)
 - [**Example Code**](#exampleCode)
 - [**WinForm creation and proprieties**](#WinForm-creation-and-proprieties)
 	- [**Create a new WinForm**](#newforms)
-    - [**PROPERTIES**](#properties)
+  - [**Properties**](#properties)
   - [**Constructor**](#Constructor)
   - [**Events**](#events)
 
@@ -22,10 +23,10 @@
 
   - [**New UI Label**](#labelcontrolsexample)
   - [**New UI Button**](#buttoncontrolsexample)
-  -   [**New UI Checkbox**](#checkboxcontrolsexample)
-  -   [**New UI PictureBox**](#pictureBoxcontrolsexample)
-  -   [**New UI TextBox**](#textboxcontrolsexample)
-  -   [**New UI ProgressBar**](#progressbarcontrolexample)
+  - [**New UI Checkbox**](#checkboxcontrolsexample)
+  - [**New UI PictureBox**](#pictureBoxcontrolsexample)
+  - [**New UI TextBox**](#textboxcontrolsexample)
+  - [**New UI ProgressBar**](#progressbarcontrolexample)
 
 ----
 
@@ -44,7 +45,7 @@ $npm i NodeUI
 ```javascript
 const NodeUI = require("NodeUI");
 ```
-**Creating a new UI**
+**Creating a new WinForm with some properties**
 ```javascript
 var UI = new NodeUI({
 	visible: true,
@@ -54,7 +55,7 @@ var UI = new NodeUI({
 	icon: "./icon.ico",
 });
 ```
-**Creating a new label on the previous UI**
+**Creating a new label on the UI**
 ```javascript
 var newLabel = UI.Label({
 	text: "Hey, i am new label !",
@@ -92,7 +93,7 @@ var UI = new NodeUI();
 
 ---
 <a  id="properties"></a>
-**PROPERTIES [GETTER/SETTER]**
+**Properties [GETTER/SETTER]**
 ---
 <br>
 
@@ -165,7 +166,7 @@ set consoleVisible(consoleVisible) {this.#applyConfig({consoleVisible: consoleVi
 ```
 ---
 <a  id="Constructor"></a>
-## UI Constructor Function
+## UI Function
 ---
  ### **List of Functions for UI**
 ```javascript
@@ -179,13 +180,12 @@ UI.eval(`																/
 	MessageBox.Show("C# Evaluated Code");
 	return 0.ToString();
 `)                              
-// Close the WinForm
+// Close the WinForm (Not required)
 UI.close(); 						 
-NOTE: You need to end the code with a return
 ```
 ---
 <a  id="events"></a>
-## UI Constructor Events
+## UI Events
 
 *UI and all of the futurely created controls have dedicated events.*
 
