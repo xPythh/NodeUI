@@ -10,7 +10,7 @@
 ***NodeUI*** *is designed to be the simplest way possible to make lightweight WinForms in NodeJS.*
 
 ## Table of contents:bookmark_tabs:
-- [**Updates**](#updated)
+- [**Updates**](#updates)
 - [**Installation**](#installation)
 - [**Example Code**](#exampleCode)
 - [**WinForm creation and proprieties**](#WinForm-creation-and-proprieties)
@@ -28,6 +28,12 @@
   - [**New UI TextBox**](#textboxcontrolsexample)
   - [**New UI ProgressBar**](#progressbarcontrolexample)
 
+----
+<a id="updates"></a>
+- 24/03/22 :
+	- Added a ProgressBar Control
+	- Added and modified 47 times the ReadMe to get it finally working
+	- Added a new default icon for news UI
 ----
 
 ## Installation 
