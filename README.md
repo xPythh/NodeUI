@@ -11,7 +11,7 @@
 
 ## Table of contents:bookmark_tabs:
 - [**Installation**](#installation)
-- [**DEMO CODE**](#demoCode)
+- [**Example Code**](#exampleCode)
 - [**WinForm creation and proprieties**](#WinForm-creation-and-proprieties)
 	- [**Create a new WinForm**](#newforms)
     - [**PROPERTIES**](#properties)
@@ -37,37 +37,45 @@
 	$npm i NodeUI
 ```
 ---
-<a  id="demoCode"></a>
-# DEMO CODE
+<a  id="exampleCode"></a>
+# Example Code
 
 ```javascript
-	const NodeUI = require("NodeUI");
+const NodeUI = require("NodeUI");
 ```
+**Creating a new UI**
 ```javascript
-	var UI = new NodeUI({
-		visible: true,
-		backColor: "#FFFFFF",
-		title: "New Form",
-		width: 750,
-		icon: "./icon.ico",
-	});
+var UI = new NodeUI({
+	visible: true,
+	backColor: "#FFFFFF",
+	title: "New Form",
+	width: 750,
+	icon: "./icon.ico",
+});
 ```
-**Label Controls example**
+**Creating a new label on the previous UI**
 ```javascript
-	var newFunnyLabel = UI.Label({
-		text: "HEY I AM FUNNY",
-		x: 30,
-		y: 30,
-		width: 30
-	});
+var newLabel = UI.Label({
+	text: "Hey, i am new label !",
+	x: 20,
+	y: 10,
+	width: 60
+});
 ```
-**TextBox Controls example**
+**Working with events**
 ```javascript
-	var newFunnyTextBox = UI.TextBox(); 	// Default textbox, no settings will be applied 
-		UI.on('ready', () => {
-		newFunnyLabel.text = "HEY I AM READY !"
-		UI.eval(`return 0.ToString();`);  // evaluate a string and get response with UI evalResult event (or UI error event in case of compilation error
-	});
+UI.on('ready', () => {
+	newLabel.text = "UI SEEMS READY !";
+	UI.eval(`return "ALIVE"`);  // Evaluate a string as C# code
+});
+
+newLabel.on('click', () => { 
+	UI.title = "newLabel has been clicked !";
+})
+// Evaluation result from the previous UI Function call (Returned: "ALIVE") 
+UI.on('evalResult', function(response) { 
+	console.log(response); 
+	}); 
 ```
 ---
 <a  id="WinForm-creation-and-proprieties"></a>
@@ -109,8 +117,8 @@ var UI = new NodeUI();
 ```javascript
 get tag() {return this.#config.tag}
 	
-notify(notification){this.#applyConfig({notify: notification }) }
-eval(evalString) {this.#applyConfig({evalString: evalString })}
+notify(notification){this.#applyConfig({notify: notification})}
+eval(evalString) {this.#applyConfig({evalString: evalString})}
 
 get visible() {return this.#config.visible}
 set visible(visible) {this.#applyConfig({visible: visible})}
@@ -136,11 +144,11 @@ set backImage(backImage) {this.#applyConfig({backImage: backImage})}
 get topMost() {return this.#config.topMost}
 set topMost(topMost) {this.#applyConfig({topMost: topMost})}
 
-get x() { return this.#config.xPos }
-set x(xPos) { this.#applyConfig({ x: xPos }) }
+get x() {return this.#config.xPos}
+set x(xPos) {this.#applyConfig({x: xPos })}
 
-get y() { return this.#config.y }
-set y(yPos) { this.#applyConfig({ y: yPos }) }; 
+get y() {return this.#config.y }
+set y(yPos) {this.#applyConfig({y: yPo })}; 
 
 get width() {return this.#config.width}
 set width(width) {this.#applyConfig({width: width})}
@@ -151,8 +159,8 @@ set height(height) {this.#applyConfig({height: height})}
 get icon() {return this.#config.icon}
 set icon(icon) {this.#applyConfig({icon: icon})}
 
-get consoleVisible() { return this.#config.consoleVisible };
-set consoleVisible(consoleVisible) {this.#applyConfig({consoleVisible: consoleVisiblel}) }
+get consoleVisible() {return this.#config.consoleVisible};
+set consoleVisible(consoleVisible) {this.#applyConfig({consoleVisible: consoleVisiblel})}
 ```
 ---
 <a  id="Constructor"></a>
@@ -204,37 +212,37 @@ var label = UI.Label({ [PROPRIETIES] });
 ```
 ###  Listing Getters and Setters functions
 ```javascript
-get parent() { return this.#labelConfig.parent }
-get tag() { return this.#labelConfig.tag }	
+get parent() {return this.#labelConfig.parent}
+get tag() {return this.#labelConfig.tag}	
 
-get text() { return this.#labelConfig.text; }
-set text(text) { this.#applyConfig({ text: text }) }
+get text() {return this.#labelConfig.text}
+set text(text) {this.#applyConfig({text: text})}
 	
-get x() { return this.#labelConfig.xPos }
-set x(xPos) { this.#applyConfig({ x: xPos }) }
+get x() {return this.#labelConfig.xPos}
+set x(xPos) {this.#applyConfig({x: xPos})}
 
-get y() { return this.#labelConfig.y }
-set y(yPos) { this.#applyConfig({ y: yPos }) }; 
+get y() {return this.#labelConfig.y}
+set y(yPos) {this.#applyConfig({y: yPos})}; 
 
-get width() { return this.#labelConfig.width }
-set width(width) { this.#applyConfig({ width: width }) }
+get width() {return this.#labelConfig.width}
+set width(width) {this.#applyConfig({width: width})}
 
-get height() { return this.#labelConfig.height }
-set height(height) { this.#applyConfig({ height: height }) }; 
+get height() {return this.#labelConfig.height}
+set height(height) {this.#applyConfig({height: height})}; 
 
-get visible() { return this.#labelConfig.visible }
-set visible(visible) { this.#applyConfig({ visible: visible }) }
+get visible() {return this.#labelConfig.visible}
+set visible(visible) {this.#applyConfig({visible: visible})}
 
-get deleted() { return this.#labelConfig.deleted }
-delete() { this.#applyConfig({ delete: true }) }
+get deleted() {return this.#labelConfig.deleted}
+delete() {this.#applyConfig({delete: true})}
 
-get foreColor() { return this.#labelConfig.foreColor }
-set foreColor(foreColor) { this.#applyConfig({ foreColor: foreColor}) }
+get foreColor() {return this.#labelConfig.foreColor}
+set foreColor(foreColor) {this.#applyConfig({foreColor: foreColor})}
 
-get backColor() { return this.#labelConfig.backColor }
-set backColor(backColor) { this.#applyConfig({ backColor: backColor}) }
+get backColor() {return this.#labelConfig.backColor}
+set backColor(backColor) {this.#applyConfig({backColor: backColor})}
 
-bringToFront() { this.#applyConfig({ bringToFront: true }) }
+bringToFront() {this.#applyConfig({bringToFront: true})}
 ```
 **Event Lists:**
 ```javascript
@@ -252,43 +260,43 @@ var button = UI.Button({ [PROPRIETIES] })
 ```
 ### Listing Getters and Setters functions
 ```javascript
-get parent() { return this.#buttonConfig.parent }
-get tag() { return this.#buttonConfig.tag }	
+get parent() {return this.#buttonConfig.parent}
+get tag() {return this.#buttonConfig.tag}	
 
-get text() { return this.#buttonConfig.text; }
-set text(text) { this.#applyConfig({ text: text }) }
+get text() {return this.#buttonConfig.text}
+set text(text) {this.#applyConfig({text: text})}
 	
-get x() { return this.#buttonConfig.xPos }
-set x(xPos) { this.#applyConfig({ x: xPos }) }
+get x() {return this.#buttonConfig.xPos}
+set x(xPos) {this.#applyConfig({x: xPos})}
 
-get y() { return this.#buttonConfig.y }
-set y(yPos) { this.#applyConfig({ y: yPos }) }; 
+get y() {return this.#buttonConfig.y}
+set y(yPos) {this.#applyConfig({y: yPos})}; 
 
-get width() { return this.#buttonConfig.width }
-set width(width) { this.#applyConfig({ width: width }) }
+get width() {return this.#buttonConfig.width}
+set width(width) {this.#applyConfig({width: width})}
 
-get height() { return this.#buttonConfig.height }
-set height(height) { this.#applyConfig({ height: height }) }; 
+get height() {return this.#buttonConfig.height}
+set height(height) {this.#applyConfig({height: height})}; 
 
-get visible() { return this.#buttonConfig.visible }
-set visible(visible) { this.#applyConfig({ visible: visible }) }
+get visible() {return this.#buttonConfig.visible}
+set visible(visible) {this.#applyConfig({visible: visible})}
 
-get deleted() { return this.#buttonConfig.deleted }
-delete() { this.#applyConfig({ delete: true }) }
+get deleted() {return this.#buttonConfig.deleted}
+delete() {this.#applyConfig({delete: true})}
 
 get backImage() {return this.#config.backImage}
 set backImage(backImage) {this.#applyConfig({backImage: backImage})}
 
-get foreColor() { return this.#buttonConfig.foreColor }
-set foreColor(foreColor) { this.#applyConfig({ foreColor: foreColor}) }
+get foreColor() {return this.#buttonConfig.foreColor}
+set foreColor(foreColor) {this.#applyConfig({foreColor: foreColor})}
 
-get backColor() { return this.#buttonConfig.backColor }
-set backColor(backColor) { this.#applyConfig({ backColor: backColor}) }
+get backColor() {return this.#buttonConfig.backColor}
+set backColor(backColor) {this.#applyConfig({backColor: backColor})}
 
-get enabled() { return this.#buttonConfig.enabled }
-set enabled(enabled) { this.#applyConfig({ enabled: enabled}) }
+get enabled() {return this.#buttonConfig.enabled}
+set enabled(enabled) {this.#applyConfig({enabled: enabled})}
 
-bringToFront() { this.#applyConfig({ bringToFront: true }) }
+bringToFront() {this.#applyConfig({bringToFront: true})}
 ```
 **Event Lists:**
 ```javascript
@@ -307,40 +315,40 @@ var checkBox = new UI.checkBox({ [PROPRIETIES] })
 ### Listing Getters and Setters functions
 
 ```javascript
-get parent() { return this.#checkBoxConfig.parent }
-get tag() { return this.#checkBoxConfig.tag }	
+get parent() {return this.#checkBoxConfig.parent}
+get tag() {return this.#checkBoxConfig.tag}	
 
-get checked() { return this.#checkBoxConfig.checked; }
-set checked(checked) { this.#applyConfig({ checked: checked }) }
+get checked() {return this.#checkBoxConfig.checked}
+set checked(checked) {this.#applyConfig({checked: checked})}
 
-get x() { return this.#checkBoxConfig.xPos }
-set x(xPos) { this.#applyConfig({ x: xPos }) }
+get x() {return this.#checkBoxConfig.xPos}
+set x(xPos) {this.#applyConfig({x: xPos})}
 
-get y() { return this.#checkBoxConfig.y }
-set y(yPos) { this.#applyConfig({ y: yPos }) }; 
+get y() {return this.#checkBoxConfig.y}
+set y(yPos) {this.#applyConfig({y: yPos})}; 
 
-get width() { return this.#checkBoxConfig.width }
-set width(width) { this.#applyConfig({ width: width }) }
+get width() {return this.#checkBoxConfig.width}
+set width(width) {this.#applyConfig({width: width})}
 
-get height() { return this.#checkBoxConfig.height }
-set height(height) { this.#applyConfig({ height: height }) }; 
+get height() {return this.#checkBoxConfig.height }
+set height(height) {this.#applyConfig({height: height})}; 
 
-get visible() { return this.#checkBoxConfig.visible }
-set visible(visible) { this.#applyConfig({ visible: visible }) }
+get visible() {return this.#checkBoxConfig.visible}
+set visible(visible) {this.#applyConfig({visible: visible})}
 
-get deleted() { return this.#checkBoxConfig.deleted }
-delete() { this.#applyConfig({ delete: true }) }
+get deleted() {return this.#checkBoxConfig.deleted}
+delete() {this.#applyConfig({delete: true})}
 
-get foreColor() { return this.#checkBoxConfig.foreColor }
-set foreColor(foreColor) { this.#applyConfig({ foreColor: foreColor}) }
+get foreColor() {return this.#checkBoxConfig.foreColor}
+set foreColor(foreColor) {this.#applyConfig({foreColor: foreColor})}
 
-get backColor() { return this.#checkBoxConfig.backColor }
-set backColor(backColor) { this.#applyConfig({ backColor: backColor}) }
+get backColor() {return this.#checkBoxConfig.backColor}
+set backColor(backColor) {this.#applyConfig({backColor: backColor})}
 
-get enabled() { return this.#checkBoxConfig.enabled }
-set enabled(enabled) { this.#applyConfig({ enabled: enabled}) }
+get enabled() {return this.#checkBoxConfig.enabled }
+set enabled(enabled) {this.#applyConfig({enabled: enabled}) }
 
-bringToFront() { this.#applyConfig({ bringToFront: true }) }
+bringToFront() {this.#applyConfig({bringToFront: true})}
 ```
 
 **Event Lists:**
@@ -362,37 +370,37 @@ var pictureBox = UI.PictureBox({ [PROPRIETIES] });
 ```
 ### Listing Getters and Setters functions
 ```javascript
-get parent() { return this.#pictureBoxConfig.parent }
-get tag() { return this.#pictureBoxConfig.tag }	
+get parent() {return this.#pictureBoxConfig.parent}
+get tag() {return this.#pictureBoxConfig.tag}	
 
-get x() { return this.#pictureBoxConfig.xPos }
-set x(xPos) { this.#applyConfig({ x: xPos }) }
+get x() {return this.#pictureBoxConfig.xPos}
+set x(xPos) {this.#applyConfig({x: xPos})}
 
-get y() { return this.#pictureBoxConfig.y }
-set y(yPos) { this.#applyConfig({ y: yPos }) }; 
+get y() {return this.#pictureBoxConfig.y}
+set y(yPos) {this.#applyConfig({y: yPos})}; 
 
-get width() { return this.#pictureBoxConfig.width }
-set width(width) { this.#applyConfig({ width: width }) }
+get width() {return this.#pictureBoxConfig.width}
+set width(width) {this.#applyConfig({width: width})}
 
-get height() { return this.#pictureBoxConfig.height }
-set height(height) { this.#applyConfig({ height: height }) }; 
+get height() {return this.#pictureBoxConfig.height}
+set height(height) {this.#applyConfig({height: height})}; 
 
-get height() { return this.#pictureBoxConfig.height }
-set height(height) { this.#applyConfig({ height: height }) }; 
+get height() {return this.#pictureBoxConfig.height}
+set height(height) {this.#applyConfig({height: height})}; 
 
-get visible() { return this.#pictureBoxConfig.visible }
-set visible(visible) { this.#applyConfig({ visible: visible }) }
+get visible() {return this.#pictureBoxConfig.visible}
+set visible(visible) {this.#applyConfig({visible: visible})}
 
-get deleted() { return this.#pictureBoxConfig.deleted }
-delete() { this.#applyConfig({ delete: true }) }
+get deleted() {return this.#pictureBoxConfig.deleted}
+delete() {this.#applyConfig({delete: true})}
 
-get backColor() { return this.#pictureBoxConfig.backColor }
-set backColor(backColor) { this.#applyConfig({ backColor: backColor}) }
+get backColor() {return this.#pictureBoxConfig.backColor}
+set backColor(backColor) {this.#applyConfig({backColor: backColor})}
 
-get image() { return this.#pictureBoxConfig.image }
-set image(image) { this.#applyConfig({ image: image}) }
+get image() {return this.#pictureBoxConfig.image}
+set image(image) {this.#applyConfig({image: image})}
 
-bringToFront() { this.#applyConfig({ bringToFront: true }) }
+bringToFront() {this.#applyConfig({bringToFront: true})}
 ```
 
 **Event Lists:**
@@ -412,37 +420,37 @@ var textBox = UI.TextBox({ [PROPRIETIES] });
 ### Listing Getters and Setters functions
 
 ```javascript
-get parent() { return this.#textBoxConfig.parent }
-get tag() { return this.#textBoxConfig.tag }	
+get parent() {return this.#textBoxConfig.parent}
+get tag() {return this.#textBoxConfig.tag}	
 
-get text() { return this.#textBoxConfig.text; }
-set text(text) { this.#applyConfig({ text: text }) }
+get text() {return this.#textBoxConfig.text}
+set text(text) {this.#applyConfig({text: text})}
 	
-get x() { return this.#textBoxConfig.xPos }
-set x(xPos) { this.#applyConfig({ x: xPos }) }
+get x() {return this.#textBoxConfig.xPos}
+set x(xPos) {this.#applyConfig({x: xPos})}
 
-get y() { return this.#textBoxConfig.y }
-set y(yPos) { this.#applyConfig({ y: yPos }) }; 
+get y() {return this.#textBoxConfig.y}
+set y(yPos) {this.#applyConfig({y: yPos})}; 
 
-get width() { return this.#textBoxConfig.width }
-set width(width) { this.#applyConfig({ width: width }) }
+get width() {return this.#textBoxConfig.width}
+set width(width) {this.#applyConfig({width: width})}
 
-get height() { return this.#textBoxConfig.height }
-set height(height) { this.#applyConfig({ height: height }) }; 
+get height() {return this.#textBoxConfig.height}
+set height(height) {this.#applyConfig({height: height})}; 
 
-get visible() { return this.#textBoxConfig.visible }
-set visible(visible) { this.#applyConfig({ visible: visible }) }
+get visible() {return this.#textBoxConfig.visible}
+set visible(visible) {this.#applyConfig({visible: visible})}
 
-get deleted() { return this.#textBoxConfig.deleted }
-delete() { this.#applyConfig({ delete: true }) }
+get deleted() {return this.#textBoxConfig.deleted}
+delete() {this.#applyConfig({delete: true})}
 
-get foreColor() { return this.#textBoxConfig.foreColor }
-set foreColor(foreColor) { this.#applyConfig({ foreColor: foreColor}) }
+get foreColor() {return this.#textBoxConfig.foreColor}
+set foreColor(foreColor) {this.#applyConfig({foreColor: foreColor})}
 
-get backColor() { return this.#textBoxConfig.backColor }
-set backColor(backColor) { this.#applyConfig({ backColor: backColor}) }
+get backColor() {return this.#textBoxConfig.backColor }
+set backColor(backColor) {this.#applyConfig({backColor: backColor})}
 
-bringToFront() { this.#applyConfig({ bringToFront: true }) }
+bringToFront() {this.#applyConfig({bringToFront: true})}
 ```
 **Event Lists:**
 ```javascript
