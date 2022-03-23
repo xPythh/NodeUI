@@ -1,6 +1,6 @@
 # NodeUI
 ---
-<img style="border:1px solid;border-color:#000000;align=left" src=./img/NodeUILB.png  width="100%" height="250" /> 
+<img style="border:1px solid;border-color:#000000;align=left" src=./img/NodeUILB.png  width="400" height="250" /> 
 
 ---
 
