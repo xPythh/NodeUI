@@ -25,6 +25,7 @@
   -   [**New UI Checkbox**](#checkboxcontrolsexample)
   -   [**New UI PictureBox**](#pictureBoxcontrolsexample)
   -   [**New UI TextBox**](#textboxcontrolsexample)
+  -   [**New UI ProgressBar**](#progressbarcontrolexample)
 
 ----
 
@@ -34,7 +35,7 @@
  - Windows
  - NodeJS
 ```
-	$npm i NodeUI
+$npm i NodeUI
 ```
 ---
 <a  id="exampleCode"></a>
@@ -75,7 +76,7 @@ newLabel.on('click', () => {
 // Evaluation result from the previous UI Function call (Returned: "ALIVE") 
 UI.on('evalResult', function(response) { 
 	console.log(response); 
-	}); 
+}); 
 ```
 ---
 <a  id="WinForm-creation-and-proprieties"></a>
@@ -208,9 +209,9 @@ UI.on('evalResult', function(result) {     });           // Returned content fro
 ## New UI Label
 
 ```javascript
-var label = UI.Label({ [PROPRIETIES] });
+var newLabel = UI.Label({ [PROPRIETIES] });
 ```
-###  Listing Getters and Setters functions
+###  Listing Getters, Setters and Functions
 ```javascript
 get parent() {return this.#labelConfig.parent}
 get tag() {return this.#labelConfig.tag}	
@@ -246,19 +247,19 @@ bringToFront() {this.#applyConfig({bringToFront: true})}
 ```
 **Event Lists:**
 ```javascript
-label.on('click', () => {     });
-label.on('mouseEnter', () => {     });   
-label.on('mouseLeave', () => {     });  
-label.on('mouseMove', function(x, y) {     });  
+newLabel.on('click', () => {     });
+newLabel.on('mouseEnter', () => {     });   
+newLabel.on('mouseLeave', () => {     });  
+newLabel.on('mouseMove', function(x, y) {     });  
 ```
 ---
 <a  id="buttoncontrolsexample"></a>
 ## New UI Button
 
 ```javascript
-var button = UI.Button({ [PROPRIETIES] })
+var newButton = UI.Button({ [PROPRIETIES] })
 ```
-### Listing Getters and Setters functions
+### Listing Getters, Setters and Functions
 ```javascript
 get parent() {return this.#buttonConfig.parent}
 get tag() {return this.#buttonConfig.tag}	
@@ -300,19 +301,19 @@ bringToFront() {this.#applyConfig({bringToFront: true})}
 ```
 **Event Lists:**
 ```javascript
-button.on('click', () => {     });
-button.on('mouseEnter', () => {     });      
-button.on('mouseLeave', () => {     });  
-button.on('mouseMove', function(x, y) {     });  
+newButton.on('click', () => {     });
+newButton.on('mouseEnter', () => {     });      
+newButton.on('mouseLeave', () => {     });  
+newButton.on('mouseMove', function(x, y) {     });  
 ```
 ---
 <a  id="checkboxcontrolsexample"></a>
 ## New UI Checkbox
 
 ```javascript
-var checkBox = new UI.checkBox({ [PROPRIETIES] })
+var newCheckBox = new UI.checkBox({ [PROPRIETIES] })
 ```
-### Listing Getters and Setters functions
+### Listing Getters, Setters and Functions
 
 ```javascript
 get parent() {return this.#checkBoxConfig.parent}
@@ -353,11 +354,11 @@ bringToFront() {this.#applyConfig({bringToFront: true})}
 
 **Event Lists:**
 ```javascript
-checkBox.on('mouseClick', () => {     });     
-checkBox.on('mouseEnter', () => {     });   
-checkBox.on('mouseLeave', () => {     });  
-checkBox.on('mouseMove', function(x, y) {     });  
-checkBox.on('checkChanged', function(true) {     }); 
+newCheckBox.on('mouseClick', () => {     });     
+newCheckBox.on('mouseEnter', () => {     });   
+newCheckBox.on('mouseLeave', () => {     });  
+newCheckBox.on('mouseMove', function(x, y) {     });  
+newCheckBox.on('checkChanged', function(true) {     }); 
 ```
 ***Note:*** checkChanged has one argument that is either true or false.
 
@@ -366,9 +367,9 @@ checkBox.on('checkChanged', function(true) {     });
 ## New UI PictureBox
 
 ```javascript
-var pictureBox = UI.PictureBox({ [PROPRIETIES] });
+var newPictureBox = UI.PictureBox({ [PROPRIETIES] });
 ```
-### Listing Getters and Setters functions
+### Listing Getters, Setters and Functions
 ```javascript
 get parent() {return this.#pictureBoxConfig.parent}
 get tag() {return this.#pictureBoxConfig.tag}	
@@ -405,19 +406,19 @@ bringToFront() {this.#applyConfig({bringToFront: true})}
 
 **Event Lists:**
 ```javascript
-pictureBox.on('mouseClick', () => {     });   
-pictureBox.on('mouseEnter', () => {     });   
-pictureBox.on('mouseLeave', () => {     });  
-pictureBox.on('mouseMove', function(x, y) {     });  
+newPictureBox.on('mouseClick', () => {     });   
+newPictureBox.on('mouseEnter', () => {     });   
+newPictureBox.on('mouseLeave', () => {     });  
+newPictureBox.on('mouseMove', function(x, y) {     });  
 ```
 ---
 <a  id="textboxcontrolsexample"></a>
 ## New UI TextBox
 
 ```javascript
-var textBox = UI.TextBox({ [PROPRIETIES] });
+var newTextBox = UI.TextBox({ [PROPRIETIES] });
 ```
-### Listing Getters and Setters functions
+### Listing Getters, Setters and Functions
 
 ```javascript
 get parent() {return this.#textBoxConfig.parent}
@@ -454,9 +455,52 @@ bringToFront() {this.#applyConfig({bringToFront: true})}
 ```
 **Event Lists:**
 ```javascript
-textBox.on('mouseClick', () => {     });   
-textBox.on('mouseEnter', () => {     });   
-textBox.on('mouseLeave', () => {     });  
-textBox.on('mouseMove', function(x, y) {     });  
-textBox.on('textChanged', function(newText) {     }); 
+newTextBox.on('mouseClick', () => {     });   
+newTextBox.on('mouseEnter', () => {     });   
+newTextBox.on('mouseLeave', () => {     });  
+newTextBox.on('mouseMove', function(x, y) {     });  
+newTextBox.on('textChanged', function(newText) {     }); 
+```
+---
+<a  id="progressbarcontrolexample"></a>
+## New UI TextBox
+
+```javascript
+var newProgressBar = UI.ProgressBar({ [PROPRIETIES] });
+```
+### Listing Getters, Setters and Functions
+
+```javascript
+get parent() {return this.#textBoxConfig.parent}
+get tag() {return this.#textBoxConfig.tag}	
+	
+get x() {return this.#textBoxConfig.xPos}
+set x(xPos) {this.#applyConfig({x: xPos})}
+
+get y() {return this.#textBoxConfig.y}
+set y(yPos) {this.#applyConfig({y: yPos})}; 
+
+get width() {return this.#textBoxConfig.width}
+set width(width) {this.#applyConfig({width: width})}
+
+get height() {return this.#textBoxConfig.height}
+set height(height) {this.#applyConfig({height: height})}; 
+
+get visible() {return this.#textBoxConfig.visible}
+set visible(visible) {this.#applyConfig({visible: visible})}
+
+get deleted() {return this.#textBoxConfig.deleted}
+delete() {this.#applyConfig({delete: true})}
+
+get value() {return this.#textBoxConfig.value}
+set value(value) {this.#applyConfig({value: value})}
+
+bringToFront() {this.#applyConfig({bringToFront: true})}
+```
+**Event Lists:**
+```javascript
+newProgressBar.on('mouseClick', () => {     });   
+newProgressBar.on('mouseEnter', () => {     });   
+newProgressBar.on('mouseLeave', () => {     });  
+newProgressBar.on('mouseMove', function(x, y) {     });  
 ```
