@@ -1,5 +1,7 @@
 const fs = require("fs");
 const Console = require("./ConsoleManager.js");
+const FontBuilder = require("./FontBuilder.js");
+
 
 module.exports = (configAttrib, controlConfig, defaultValues, packetQueue, controlClass) => 
 {
@@ -11,7 +13,8 @@ module.exports = (configAttrib, controlConfig, defaultValues, packetQueue, contr
 			if (typeof(defaultValues[confElemKey]) !== typeof(confElemValue))
 				return console.log(new Error(`Setting ${confElemKey} is expected to be of type '${typeof(defaultValues[confElemKey])}'. Got type ${typeof(confElemValue)}.`).stack);
 			else
-				controlConfig[confElemKey] = confElemValue
+				controlConfig[confElemKey] = confElemValue;
+
 			switch (confElemKey) 
 			{
 
@@ -29,7 +32,10 @@ module.exports = (configAttrib, controlConfig, defaultValues, packetQueue, contr
 
 
 
-
+				case 'font': 
+					var fontString = FontBuilder.generateFont(confElemValue);
+					packetQueue.push(`update|font|${controlClass.tag}|${fontString}`)
+				break;
 
 
 				case 'close': packetQueue.push(`ui|close`); break;
@@ -67,8 +73,13 @@ module.exports = (configAttrib, controlConfig, defaultValues, packetQueue, contr
 
 
 
+				case 'value': 
+					if (parseInt(confElemValue) > 100) confElemValue = 100
+					if (parseInt(confElemValue) < 0) confElemValue = 0; 
+					packetQueue.push(`update|value|${controlClass.tag}|${confElemValue}`); 
+				break;
 
-				case 'bringToFront': packetQueue.push(`update|bringToFront${controlClass.tag}`); break;
+				case 'bringToFront': packetQueue.push(`update|bringToFront|${controlClass.tag}`); break;
 
 				case 'enabled': packetQueue.push(`update|enabled|${controlClass.tag}|${confElemValue}`); break;
 

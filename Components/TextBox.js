@@ -59,6 +59,9 @@ module.exports = class extends EventEmitter
 	get backColor() { return this.#getValue(backColor)}
 	set backColor(backColor) { this.#applyConfig({ backColor: backColor}) }
 
+	get font() { return this.getValue("font")}
+	set font(font) { this.#applyConfig({ font: font}) }
+
 	bringToFront() { this.#applyConfig({ bringToFront: true }) }
 
 	#getValue(configKey) {

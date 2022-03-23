@@ -1,5 +1,5 @@
 const ApplyConfig = require("../ApplyConfig.js");
-const defaultValues = require("../DefaultValues.json")["button"];
+const defaultValues = require("../DefaultValues.json")["progressbar"];
 
 const EventEmitter = require('events');
 
@@ -7,20 +7,20 @@ module.exports = class extends EventEmitter
 {
 	
 	#config;
-	#buttonConfig;
+	#progressBarConfig;
 	#configInstalled = false;
-	constructor(newButtonConfig = {}, uiConfig = {})
+	constructor(newProgressBarConfig = {}, uiConfig = {})
 	{
 		super()
 
 		this.#config = uiConfig; // UI Config Itself
-		this.#buttonConfig = { // Button Config
+		this.#progressBarConfig = { // Button Config
 			tag: Math.random().toString(36).slice(2).toString(),
 		};
 
-		this.#buttonConfig = Object.assign({}, this.#buttonConfig, newButtonConfig)
-		this.#config.packetQueue.push(`add|button|${this.tag}`)
-		this.#applyConfig(this.#buttonConfig);
+		this.#progressBarConfig = Object.assign({}, this.#progressBarConfig, newProgressBarConfig)
+		this.#config.packetQueue.push(`add|progressBar|${this.tag}`)
+		this.#applyConfig(this.#progressBarConfig);
 		this.#config.packetQueue.push(`update|checkConfig|${this.tag}`)
 
 	}
@@ -28,10 +28,7 @@ module.exports = class extends EventEmitter
 
 
 	get parent() { return this.#getValue("parent")}
-	get tag() { return this.#buttonConfig.tag}	
-
-	get text() { return this.#getValue("text")}
-	set text(text) { this.#applyConfig({ text: text }) }
+	get tag() { return this.#progressBarConfig.tag}	
 	
 	get x() { return this.#getValue("x")}
 	set x(xPos) { this.#applyConfig({ x: xPos }) }
@@ -51,30 +48,21 @@ module.exports = class extends EventEmitter
 	get deleted() { return this.#getValue("deleted")}
 	delete() { this.#applyConfig({ delete: true }) }
 
-	get backImage() {return this.#getValue("backImage")}
-	set backImage(backImage) {this.#applyConfig({backImage: backImage})}
-
-	get foreColor() { return this.#getValue("foreColor")}
-	set foreColor(foreColor) { this.#applyConfig({ foreColor: foreColor}) }
-
-	get backColor() { return this.#getValue("backColor")}
-	set backColor(backColor) { this.#applyConfig({ backColor: backColor}) }
-
 	get enabled() { return this.#getValue("enabled")}
 	set enabled(enabled) { this.#applyConfig({ enabled: enabled}) }
 
-	get font() { return this.getValue("font")}
-	set font(font) { this.#applyConfig({ font: font}) }
+	get value() { return this.#getValue("value")}
+	set value(value) { this.#applyConfig({ value: value }) }
 
 	bringToFront() { this.#config.packetQueue.push(`update|bringToFront|${this.tag}`); }
 
 	#getValue(configKey) {
 		if (this.#config.hasOwnProperty(configKey))
-			return this.#buttonConfig[configKey];
+			return this.#progressBarConfig[configKey];
 		else
 			return defaultValues[configKey];
 	}
 
-	#applyConfig(configAttribs) { ApplyConfig(configAttribs, this.#buttonConfig, defaultValues, this.#config.packetQueue, this); }
+	#applyConfig(configAttribs) { ApplyConfig(configAttribs, this.#progressBarConfig, defaultValues, this.#config.packetQueue, this); }
 
 }

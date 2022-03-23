@@ -67,6 +67,9 @@ module.exports = class extends EventEmitter
 	get enabled() { return this.#getValue("enabled")}
 	set enabled(enabled) { this.#applyConfig({ enabled: enabled}) }
 
+	get font() { return this.getValue("font")}
+	set font(font) { this.#applyConfig({ font: font}) }
+
 	bringToFront() { this.#applyConfig({ bringToFront: true }) }
 
 	#getValue(configKey) {

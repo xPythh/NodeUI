@@ -13,6 +13,8 @@ async function init(NodeUI, config)
     config.socketPort = config.socket.address().port;
     config.packetQueue = [];
 
+    config.packetQueue.push(`ui|tag|${NodeUI.tag}`);
+
     handleSocket(NodeUI, config);
 }
 
@@ -45,7 +47,6 @@ function handleSocket(NodeUI, config)
                     return;
                 }
                 
-                console.log(dataParts)
                 if (dataParts[0] === "codeEvaluation")
                 {
                     if (dataParts[1] === "failure")
