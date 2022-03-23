@@ -6,7 +6,7 @@
 
 [![npm version](https://badge.fury.io/js/angular2-expandable-list.svg)](https://badge.fury.io/js/angular2-expandable-list)  ![javascript](https://img.shields.io/badge/%20%20JavaScript-%20%20%20%20730L-f1e05a.svg)
 
-***Create WinForm easily with the power of NodeUI module***
+***Create WinForm easily with the power of NodeUI module***\
 ***NodeUI*** *is designed to be the simplest way possible to make lightweight WinForms in NodeJS.*
 
 ## Table of contents:bookmark_tabs:
@@ -30,6 +30,7 @@
 
 ----
 <a id="updates"></a>
+# Updates
 - 24/03/22 :
 	- Added a ProgressBar Control
 	- Added and modified 47 times the ReadMe to get it finally working
