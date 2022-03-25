@@ -26,6 +26,7 @@ function handleSocket(NodeUI, config)
         client.authentified = false;
         client.closeSignalSend = false;
         client.previousWarning = "";
+        
 
         client.write(`ui|tag|${config.tag}<EOM>`)
         client.on('data', function(data)
@@ -41,7 +42,7 @@ function handleSocket(NodeUI, config)
                     {
                         config.socketClient = client;
                         this.authentified = true;
-                        packetQueueManagerInterval = setInterval(PacketQueurManager, 4);
+                        packetQueueManagerInterval = setInterval(PacketQueurManager, 5);
                         NodeUI.emit('ready');
                     }
                     return;
@@ -132,7 +133,7 @@ function handleSocket(NodeUI, config)
                 var nextPacket = config.packetQueue.join("<EOM>");
                 console.log(config.packetQueue)
                 config.packetQueue = [];
-                client.write(nextPacket);
+                client.write(nextPacket + "<EOM>");
             }
         }
     });
